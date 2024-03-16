@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShitCoinParser")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df1ed7745011022be4675034ef82bd15498011d9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e4fc9bf0e2ee53113edb9cdb4de60416423c304")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShitCoinParser")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShitCoinParser")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

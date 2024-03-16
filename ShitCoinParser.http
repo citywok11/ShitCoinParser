@@ -1,6 +1,0 @@
-@ShitCoinParser_HostAddress = http://localhost:5232
-
-GET {{ShitCoinParser_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

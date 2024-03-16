@@ -1,3 +1,6 @@
 ﻿/.vs/ShitCoinParser/v17/.suo
 /.vs/ShitCoinParser/DesignTimeBuild/.dtbcache.v2
+/vs
 *.vsidx
+/debug
+/obj
