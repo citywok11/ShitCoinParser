@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Options;
 using ShitCoinParser.Configuration;
+using ShitCoinParser.Repositories.Interfaces;
+using ShitCoinParser.Services.Interfaces;
 
 namespace ShitCoinParser.Services
 {

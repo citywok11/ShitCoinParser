@@ -5,8 +5,25 @@ using ShitCoinParser.Models;
 using ShitCoinParser.Configuration;
 using System.Configuration;
 using Microsoft.Extensions.Options;
+using ShitCoinParser.RepositoryModelFacade.Repositories;
+using ShitCoinParser.Repositories.Interfaces;
+using ShitCoinParser.Services.Interfaces;
+using ShitCoinParser.Services;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Assuming you have already configured MongoSettings binding
+builder.Services.AddSingleton<IMongoSettingsService, MongoSettingsService>();
+builder.Services.AddSingleton<IValidator<MongoSettings>, MongoSettingsValidator>();
+builder.Services.AddSingleton<IMongoClientFactory, MongoClientFactory>();
+builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoDB"));
+
+
+builder.Services.AddScoped<IShitCoinMetaDataRepository, ShitCoinMetaDataRepository>();
+builder.Services.AddScoped<IShitCoinHistoricalDataRepository, ShitCoinHistoricalDataRespository>();
+builder.Services.AddScoped<IShitCoinHistoricalDataService, ShitCoinHistoricalDataService>();
+builder.Services.AddScoped<IShitCoinMetaDataService, ShitCoinMetaDataService>();
 
 // Attempt to bind the configuration section to MongoSettings
 var mongoSettingsSection = builder.Configuration.GetSection("MongoDB");
@@ -15,13 +32,10 @@ var mongoSettings = mongoSettingsSection.Get<MongoSettings>();
 builder.Services.AddOptions<MongoSettings>()
     .Bind(builder.Configuration.GetSection("MongoDB"))
     .ValidateDataAnnotations();
-    builder.Services.AddSingleton<IMongoSettings>(sp =>
-    sp.GetRequiredService<IOptions<MongoSettings>>().Value);
+builder.Services.AddSingleton<IMongoSettings>(sp =>
+sp.GetRequiredService<IOptions<MongoSettings>>().Value);
 
-// Register the MongoClientFactory
-builder.Services.AddSingleton<MongoClientFactory>();
-// Register the repository
-builder.Services.AddScoped<ShitCoinParser.RepositoryModelFacade.Repositories.ShitCoinMetaDataRepository>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

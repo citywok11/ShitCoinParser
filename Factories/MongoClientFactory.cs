@@ -2,13 +2,14 @@
 using Microsoft.Extensions.Options;
 using ShitCoinParser.Configuration;
 using ShitCoinParser.Services;
+using ShitCoinParser.Services.Interfaces;
 
-public class MongoClientFactory
+public class MongoClientFactory : IMongoClientFactory
 {
-    private readonly MongoSettings _mongoSettings;
+    private readonly IMongoSettings _mongoSettings;
     private readonly ILogger<MongoClientFactory> _logger;
 
-    public MongoClientFactory(MongoSettingsService settingsService, ILogger<MongoClientFactory> logger)
+    public MongoClientFactory(IMongoSettingsService settingsService, ILogger<MongoClientFactory> logger)
     {
         _mongoSettings = settingsService.GetValidatedSettings(); // Assumes validation is already done
         _logger = logger;

@@ -4,15 +4,25 @@ using Newtonsoft.Json;
 
 namespace ShitCoinParser.Models
 {
-    public class HistoricalData
+    public class ShitCoinHistoricalDataModel
     {
-        public List<Price0>? Price_0 { get; set; }
-        public Dictionary<string, List<PricePoint>> AdditionalPrices { get; set; }
-
-        public HistoricalData()
+        public ShitCoinHistoricalDataModel()
         {
             AdditionalPrices = new Dictionary<string, List<PricePoint>>() ?? [];
         }
+
+        public class ShitCoinHistoricalData
+        {
+            [BsonId]
+            [BsonRepresentation(BsonType.ObjectId)]
+            public HistoricalId? _id { get; set; }
+            public string? ShitCoinId { get; set; }
+            public List<object>? HistoricalData { get; set; }
+        }
+
+        public List<Price0>? Price_0 { get; set; }
+        public Dictionary<string, List<PricePoint>> AdditionalPrices { get; set; }
+
     }
 
     public class PricePoint
@@ -29,19 +39,9 @@ namespace ShitCoinParser.Models
         public DateTime Timestamp { get; set; }
     }
 
-    public class ShitCoinHistoricalDataModel
+    public class HistoricalId
     {
         [JsonProperty("$oid")]
         public string? oid { get; set; }
     }
-
-    public class Root
-    {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public Id? _id { get; set; }
-        public string? ShitCoinId { get; set; }
-        public List<object>? HistoricalData { get; set; }
-    }
-
 }

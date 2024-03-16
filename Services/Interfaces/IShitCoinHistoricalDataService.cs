@@ -1,6 +1,6 @@
 ﻿using ShitCoinParser.Models;
 
-namespace ShitCoinParser.Services
+namespace ShitCoinParser.Services.Interfaces
 {
     public interface IShitCoinHistoricalDataService
     {

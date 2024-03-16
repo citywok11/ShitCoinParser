@@ -1,8 +1,8 @@
 ﻿/.vs/ShitCoinParser/v17/.suo
 /.vs/ShitCoinParser/DesignTimeBuild/.dtbcache.v2
-/vs
+.vs/
 *.vsidx
 /debug
-/obj
+**/obj/
 /appsettings.json
 /bin/Debug/net8.0

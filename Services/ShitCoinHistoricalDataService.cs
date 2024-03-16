@@ -1,4 +1,5 @@
 ﻿using ShitCoinParser.Models;
+using ShitCoinParser.Services.Interfaces;
 
 namespace ShitCoinParser.Services
 {
