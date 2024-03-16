@@ -4,3 +4,4 @@
 *.vsidx
 /debug
 /obj
+/appsettings.json
