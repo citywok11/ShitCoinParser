@@ -15,18 +15,18 @@
             private readonly IConfiguration _configuration;
             private readonly ILogger<IShitCoinMetaDataRepository> _logger;
 
-            public ShitCoinMetaDataRepository(MongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger, IConfiguration configuration)
+            public ShitCoinMetaDataRepository(IMongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger, IConfiguration configuration)
             {
                 _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-                _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration)); 
+                _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
-                var database = mongoClientFactory.GetDatabase();
+                // Use the factory to get the collection directly.
                 var collectionName = _configuration["MongoDB:MetaDataName"];
-                _collection = database.GetCollection<ShitCoinMetaData>(collectionName);
+                _collection = mongoClientFactory.GetCollection<ShitCoinMetaData>(collectionName);
 
                 _logger.LogInformation("ShitCoinMetaDataRepository initialized successfully.");
             }
-        
+
             public async Task<List<ShitCoinMetaData>> GetAllAsync()
             {
                 return await _collection.Find(new BsonDocument()).ToListAsync();
