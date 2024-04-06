@@ -4,33 +4,31 @@
     using MongoDB.Driver;
     using ShitCoinParser.Models;
     using ShitCoinParser.Repositories.Interfaces;
+    using ShitCoinParser.RepositoryModelFacade.Repositories;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    namespace Repositories
+    
+    public class ShitCoinHistoricalDataRespository : IShitCoinHistoricalDataRepository
     {
-        public class ShitCoinHistoricalDataRespository : IShitCoinHistoricalDataRepository
-		{
-            private readonly IMongoCollection<ShitCoinHistoricalDataModel> _collection;
-            private readonly IConfiguration _configuration;
+        private readonly IMongoCollection<ShitCoinHistoricalDataModel> _collection;
+        private readonly IConfiguration _configuration;
 
-            public ShitCoinHistoricalDataRespository(IMongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger)
-            {
-                _configuration = _configuration ?? throw new ArgumentNullException(nameof(_configuration));
+        public ShitCoinHistoricalDataRespository(IMongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger)
+        {
+            _configuration = _configuration ?? throw new ArgumentNullException(nameof(_configuration));
 
-                var database = mongoClientFactory.GetDatabase();
-                var collectionName = _configuration["MongoDB:HistoricalDataName"];
+            var database = mongoClientFactory.GetDatabase();
+            var collectionName = _configuration["MongoDB:HistoricalDataName"];
 
-                _collection = database.GetCollection<ShitCoinHistoricalDataModel>(collectionName);
+            _collection = database.GetCollection<ShitCoinHistoricalDataModel>(collectionName);
 
-                logger.LogInformation("ShitCoinMetaDataRepository initialized successfully.");
-            }
-
-            public async Task<List<ShitCoinHistoricalDataModel>> GetAllAsync()
-            {
-                return await _collection.Find(new BsonDocument()).ToListAsync();
-            }
+            logger.LogInformation("ShitCoinMetaDataRepository initialized successfully.");
         }
 
+        public async Task<List<ShitCoinHistoricalDataModel>> GetAllAsync()
+        {
+            return await _collection.Find(new BsonDocument()).ToListAsync();
+        }
     }
 }

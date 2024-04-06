@@ -10,6 +10,7 @@ using ShitCoinParser.Repositories.Interfaces;
 using ShitCoinParser.Services.Interfaces;
 using ShitCoinParser.Services;
 using FluentValidation;
+using ShitCoinParser.RepositoryModelFacade;
 
 var builder = WebApplication.CreateBuilder(args);
 

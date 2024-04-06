@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Cms;
 using ShitCoinParser.Models;
 using ShitCoinParser.Services.Interfaces;
 
@@ -19,6 +20,7 @@ namespace ShitCoinParser.Controllers
         }
 
         [HttpGet]
+        [Route("AllMetaData")]
         public async Task<ActionResult<List<ShitCoinMetaData>>> GetAllShitCoinMetaData()
         {
             try
@@ -37,5 +39,24 @@ namespace ShitCoinParser.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("AllIds")]
+        public async Task<ActionResult<IEnumerable<string>>> GetAllIds()
+        {
+            try
+            {
+                var ids = await _metaDataService.GetAllShitCoinMetaDataIds();
+                if (ids == null || ids.Count() == 0)
+                {
+                    return NotFound("No ShitCoin ids found.");
+                }
+                return Ok(ids);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching ShitCoin ids.");
+                return StatusCode(500, "An error occurred while fetching ShitCoin ids.");
+            }
+        }
     }
 }

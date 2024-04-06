@@ -45,6 +45,27 @@
                     return new List<ShitCoinMetaData>();
                 }
             }
+
+            public async Task<IEnumerable<string>> GetAllIdsAsync()
+            {
+                try
+                {
+                    // Project the result to only include the _id field
+                    var projection = Builders<ShitCoinMetaData>.Projection.Include(x => x._id);
+                    var documents = await _collection.Find(new BsonDocument())
+                                                     .Project<BsonDocument>(projection)
+                                                     .ToListAsync();
+
+                    // Convert the BsonDocument list to a list of string representations of _id
+                    var idList = documents.Select(doc => doc["_id"].ToString()).ToList();
+                    return idList;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"An error occurred while fetching _id values: {ex.Message}");
+                    return new List<string>(); // Return an empty list in case of an error
+                }
+            }
         }
 
     }

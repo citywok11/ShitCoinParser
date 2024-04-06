@@ -29,5 +29,19 @@ namespace ShitCoinParser.Services
             }
         }
 
+        public async Task<IEnumerable<string>> GetAllShitCoinMetaDataIds()
+        {
+            try
+            {
+                return await _repository.GetAllIdsAsync();
+
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Unable to get shitcoin data");
+                throw;
+            }
+        }
+
     }
 }
