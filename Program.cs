@@ -13,8 +13,9 @@ using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoDB"));
-builder.Services.AddSingleton<IMongoSettings>(sp => sp.GetRequiredService<IOptions<MongoSettings>>().Value);
+builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("DB"));
+builder.Services.AddSingleton<IMongoSettings>(sp =>
+    sp.GetRequiredService<IOptions<MongoSettings>>().Value);
 
 builder.Services.AddSingleton<IMongoClientFactory, MongoClientFactory>(serviceProvider =>
 {

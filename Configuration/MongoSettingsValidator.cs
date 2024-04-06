@@ -9,7 +9,7 @@ namespace ShitCoinParser.Configuration
             RuleFor(settings => settings.ConnectionString)
                 .NotEmpty().WithMessage("MongoDB connection string must not be empty.");
 
-            RuleFor(settings => settings.ShitDatabaseName)
+            RuleFor(settings => settings.ShitCoinDbName)
                 .NotEmpty().WithMessage("MongoDB database name must not be empty.");
 
         }

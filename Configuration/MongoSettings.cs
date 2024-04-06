@@ -4,13 +4,10 @@ namespace ShitCoinParser.Configuration
 {
     public class MongoSettings : IMongoSettings
     {
-        [Required]
         public string? ConnectionString { get; set; }
-        [Required]
-        public string? ShitDatabaseName { get; set; }
-        [Required]
-        public string? HistoricalDataName { get; set; }
-        [Required]
-        public string? MetaDataName { get; set; }
+        public string? ShitCoinDbName { get; set; }
+        public string? MetaDataCollectionName { get; set; }
+        public string? HistoricalDataCollectionName { get; set; }
+        public string? PriceAnalyticsCollectionName { get; set; }
     }
 }

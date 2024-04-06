@@ -1,7 +1,9 @@
 ﻿namespace ShitCoinParser.RepositoryModelFacade
 {
+    using Microsoft.Extensions.Options;
     using MongoDB.Bson;
     using MongoDB.Driver;
+    using ShitCoinParser.Configuration;
     using ShitCoinParser.Models;
     using ShitCoinParser.Repositories.Interfaces;
     using System.Collections.Generic;
@@ -12,17 +14,20 @@
         public class ShitCoinMetaDataRepository : IShitCoinMetaDataRepository
         {
             private readonly IMongoCollection<ShitCoinMetaData> _collection;
-            private readonly IConfiguration _configuration;
             private readonly ILogger<IShitCoinMetaDataRepository> _logger;
 
-            public ShitCoinMetaDataRepository(IMongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger, IConfiguration configuration)
+            public ShitCoinMetaDataRepository(IMongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger, IOptions<MongoSettings> mongoSettings)
             {
                 _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-                _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
+                // Use MongoSettings to get the collection name.
+                var settings = mongoSettings.Value ?? throw new ArgumentNullException(nameof(mongoSettings));
+                var collectionName = settings.MetaDataCollectionName ?? throw new ArgumentNullException("MetaDataCollectionName is not configured.");
+
 
                 // Use the factory to get the collection directly.
-                var collectionName = _configuration["MongoDB:MetaDataName"];
-                _collection = mongoClientFactory.GetCollection<ShitCoinMetaData>(collectionName);
+                var database = mongoClientFactory.GetDatabase();
+                _collection = database.GetCollection<ShitCoinMetaData>(collectionName);
 
                 _logger.LogInformation("ShitCoinMetaDataRepository initialized successfully.");
             }

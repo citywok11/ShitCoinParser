@@ -8,6 +8,7 @@ public class MongoClientFactory : IMongoClientFactory
 {
     private readonly IMongoSettings _mongoSettings;
     private readonly ILogger<MongoClientFactory> _logger;
+    private readonly IOptions<IMongoSettings> _settings;
 
     public MongoClientFactory(IOptions<IMongoSettings> settings, ILogger<MongoClientFactory> logger)
     {
@@ -20,13 +21,13 @@ public class MongoClientFactory : IMongoClientFactory
         try
         {
             var client = new MongoClient(_mongoSettings.ConnectionString);
-            var database = client.GetDatabase(_mongoSettings.ShitDatabaseName);
-            _logger.LogInformation($"Accessed MongoDB database: {_mongoSettings.ShitDatabaseName}");
+            var database = client.GetDatabase(_mongoSettings.ShitCoinDbName);
+            _logger.LogInformation($"Accessed MongoDB database: {_mongoSettings.ShitCoinDbName}");
             return database;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Failed to access MongoDB database: {_mongoSettings.ShitDatabaseName}");
+            _logger.LogError(ex, $"Failed to access MongoDB database: {_mongoSettings.ShitCoinDbName}");
             throw; // Re-throw the exception to ensure the calling code can handle it or fail accordingly.
         }
     }
