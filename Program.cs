@@ -32,8 +32,14 @@ builder.Services.AddSingleton<IValidator<MongoSettings>, MongoSettingsValidator>
 
 builder.Services.AddScoped<IShitCoinMetaDataRepository, ShitCoinMetaDataRepository>();
 builder.Services.AddScoped<IShitCoinHistoricalDataRepository, ShitCoinHistoricalDataRespository>();
+
 builder.Services.AddScoped<IShitCoinHistoricalDataService, ShitCoinHistoricalDataService>();
+
 builder.Services.AddScoped<IShitCoinMetaDataService, ShitCoinMetaDataService>();
+
+// Register StartupTaskService as a hosted service
+builder.Services.AddHostedService<StartupTaskService>();
+
 
 // Attempt to bind the configuration section to MongoSettings
 var mongoSettingsSection = builder.Configuration.GetSection("MongoDB");
