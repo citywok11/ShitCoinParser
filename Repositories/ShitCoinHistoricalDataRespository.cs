@@ -14,7 +14,7 @@
             private readonly IMongoCollection<ShitCoinHistoricalDataModel> _collection;
             private readonly IConfiguration _configuration;
 
-            public ShitCoinHistoricalDataRespository(MongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger)
+            public ShitCoinHistoricalDataRespository(IMongoClientFactory mongoClientFactory, ILogger<ShitCoinMetaDataRepository> logger)
             {
                 _configuration = _configuration ?? throw new ArgumentNullException(nameof(_configuration));
 

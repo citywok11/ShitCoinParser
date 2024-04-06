@@ -13,11 +13,19 @@ using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Assuming you have already configured MongoSettings binding
-builder.Services.AddSingleton<IMongoSettingsService, MongoSettingsService>();
-builder.Services.AddSingleton<IValidator<MongoSettings>, MongoSettingsValidator>();
-builder.Services.AddSingleton<IMongoClientFactory, MongoClientFactory>();
 builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.AddSingleton<IMongoSettings>(sp => sp.GetRequiredService<IOptions<MongoSettings>>().Value);
+
+builder.Services.AddSingleton<IMongoClientFactory, MongoClientFactory>(serviceProvider =>
+{
+    var mongoSettings = serviceProvider.GetRequiredService<IOptions<MongoSettings>>().Value;
+    var logger = serviceProvider.GetRequiredService<ILogger<MongoClientFactory>>();
+    return new MongoClientFactory(Options.Create(mongoSettings), logger);
+});
+
+
+builder.Services.AddSingleton<IValidator<MongoSettings>, MongoSettingsValidator>();
+//builder.Services.AddSingleton<IConfiguration>();
 
 
 builder.Services.AddScoped<IShitCoinMetaDataRepository, ShitCoinMetaDataRepository>();

@@ -9,9 +9,9 @@ public class MongoClientFactory : IMongoClientFactory
     private readonly IMongoSettings _mongoSettings;
     private readonly ILogger<MongoClientFactory> _logger;
 
-    public MongoClientFactory(IMongoSettingsService settingsService, ILogger<MongoClientFactory> logger)
+    public MongoClientFactory(IOptions<IMongoSettings> settings, ILogger<MongoClientFactory> logger)
     {
-        _mongoSettings = settingsService.GetValidatedSettings(); // Assumes validation is already done
+        _mongoSettings = settings.Value;
         _logger = logger;
     }
 
