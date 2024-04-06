@@ -5,12 +5,25 @@ namespace ShitCoinParser.Models
 {
     public class ShitCoinMetaData
     {
-        public MetaDataId? _id { get; set; }
+        [BsonId]
+        public ObjectId _id { get; set; }
+
+        [BsonElement("tokenName")]
         public string? tokenName { get; set; }
+
+        [BsonElement("metaData")]
         public MetaData? metaData { get; set; }
+
+        [BsonElement("liquidityLocked")]
         public bool liquidityLocked { get; set; }
+
+        [BsonElement("tokenIsOnWebsiteOnLaunch")]
         public bool tokenIsOnWebsiteOnLaunch { get; set; }
+
+        [BsonElement("hasFunctioningWebsite")]
         public bool hasFunctioningWebsite { get; set; }
+
+        [BsonElement("hasRugged")]
         public bool hasRugged { get; set; }
     }
 

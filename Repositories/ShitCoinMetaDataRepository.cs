@@ -34,7 +34,16 @@
 
             public async Task<List<ShitCoinMetaData>> GetAllAsync()
             {
-                return await _collection.Find(new BsonDocument()).ToListAsync();
+                try
+                {
+                    return await _collection.Find(new BsonDocument()).ToListAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"An error occurred while fetching data: {ex.Message}");
+                    // Depending on your error handling strategy, you might want to rethrow, return null, or an empty list
+                    return new List<ShitCoinMetaData>();
+                }
             }
         }
 
